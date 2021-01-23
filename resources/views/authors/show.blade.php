@@ -10,6 +10,8 @@
     <div>
         <a href="{{ route('authors.edit', $author->slug) }}" style="float:right;">Auteur updaten</a>
         <h2>{{ $author->name }}</h2>
+        <br>
+        @include('books.index')
     </div>
     <div style="position:absolute; bottom: 0;">
         <form action="{{ route('authors.destroy', $author->slug) }}" method="post">

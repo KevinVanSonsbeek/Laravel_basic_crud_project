@@ -6,7 +6,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Author extends Model
+class Book extends Model
 {
     use SoftDeletes;
     use Sluggable;
@@ -17,6 +17,7 @@ class Author extends Model
 
     protected $hidden = [
         'id',
+        'author_id',
     ];
 
     /**
@@ -34,12 +35,12 @@ class Author extends Model
     }
 
     /**
-     * Return the child Book models
+     * Return the parent Author model
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function books()
+    public function author()
     {
-        return $this->hasMany(Book::class);
+        return $this->belongsTo(Author::class);
     }
 }
