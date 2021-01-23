@@ -55,7 +55,7 @@ class AuthorController extends Controller
         $author->name = $request->get('name');
         $author->save();
 
-        return redirect()->route('authors.index');
+        return redirect()->route('authors.show', $author->slug);
     }
 
     /**
