@@ -21,22 +21,41 @@ class BookController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Author $author
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function create()
+    public function create(Author $author)
     {
-        //
+        return view('books.create', [
+            'author' => $author,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Author $author
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Author $author, Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => [
+                'required',
+                'string',
+                'between:1,255',
+            ],
+        ]);
+
+        $book = $author->books()->create([
+            'name' => $request->get('name'),
+        ]);
+
+        return redirect()->route('authors.books.show', [
+            $author->slug,
+            $book->slug,
+        ]);
     }
 
     /**

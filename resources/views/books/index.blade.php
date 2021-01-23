@@ -1,4 +1,4 @@
-<h4 style="display:inline;">Boeken </h4>
+<h4 style="display:inline;">Boeken </h4><span style="display:inline; float:right;"><a href="{{ route('authors.books.create', $author->slug) }}">Boek toevoegen</a></span>
 <hr>
 @forelse($author->books  as $book)
     <div>
