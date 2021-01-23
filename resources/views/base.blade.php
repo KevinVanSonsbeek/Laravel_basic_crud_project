@@ -2,9 +2,10 @@
 <html lang="en">
     <head>
         <title>{{ config('app.name') }} - @yield('title')</title>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
     <body>
         @yield('content')
-        @yield('scripts')
+        @stack('scripts')
     </body>
 </html>

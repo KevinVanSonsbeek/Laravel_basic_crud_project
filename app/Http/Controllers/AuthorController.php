@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Author;
+use App\Mail\AuthorDeleted;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 
 class AuthorController extends Controller
@@ -108,11 +110,15 @@ class AuthorController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Author $author
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Author $author)
     {
-        //
+        $author->delete();
+
+        Mail::to(config('app.app_admin_email'))->send(new AuthorDeleted($author));
+
+        return redirect()->route('authors.index');
     }
 }
