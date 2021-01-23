@@ -76,24 +76,40 @@ class BookController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Author $author
+     * @param Book $book
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(Author $author, Book $book)
     {
-        //
+        return view('books.edit', [
+            'author' => $author,
+            'book' => $book,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Author $author
+     * @param Book $book
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Author $author, Book $book, Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => [
+                'required',
+                'string',
+                'between:1,255',
+            ],
+        ]);
+
+        $book->name = $request->get('name');
+        $book->save();
+
+        return redirect()->route('authors.books.show', [$author->slug, $book->slug]);
     }
 
     /**
