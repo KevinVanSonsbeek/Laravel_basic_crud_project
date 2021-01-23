@@ -72,12 +72,14 @@ class AuthorController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Author $author
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(Author $author)
     {
-        //
+        return view('authors.edit', [
+            'author' => $author,
+        ]);
     }
 
     /**
@@ -85,11 +87,22 @@ class AuthorController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Author $author)
     {
-        //
+        $this->validate($request, [
+            'name' => [
+                'required',
+                'string',
+                'between:5,255',
+            ],
+        ]);
+
+        $author->name = $request->get('name');
+        $author->save();
+
+        return redirect()->route('authors.show', $author->slug);
     }
 
     /**

@@ -8,6 +8,7 @@
     </div>
     <hr>
     <div>
+        <a href="{{ route('authors.edit', $author->slug) }}" style="float:right;">Auteur updaten</a>
         <h2>{{ $author->name }}</h2>
     </div>
 @endsection
