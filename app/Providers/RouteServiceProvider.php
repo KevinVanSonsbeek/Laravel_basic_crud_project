@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Author;
+use App\Book;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,10 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::bind('author', function ($value) {
             return Author::where('slug', $value)->firstOrFail();
+        });
+
+        Route::bind('book', function ($value) {
+            return Book::where('slug', $value)->firstOrFail();
         });
     }
 

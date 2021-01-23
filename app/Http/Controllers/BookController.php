@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Author;
+use App\Book;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -40,12 +42,16 @@ class BookController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Author $author
+     * @param Book $book
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function show($id)
+    public function show(Author $author, Book $book)
     {
-        //
+        return view('books.show', [
+            'author' => $author,
+            'book' => $book,
+        ]);
     }
 
     /**
