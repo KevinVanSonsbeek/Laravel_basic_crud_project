@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Author;
 use App\Book;
+use App\Mail\AuthorDeleted;
+use App\Mail\BookDeleted;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class BookController extends Controller
 {
@@ -115,11 +118,16 @@ class BookController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Author $author
+     * @param Book $book
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Author $author, Book $book)
     {
-        //
+        $book->delete();
+
+        Mail::to(config('app.app_admin_email'))->send(new BookDeleted($author, $book));
+
+        return redirect()->route('authors.show', $author->slug);
     }
 }

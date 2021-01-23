@@ -115,6 +115,9 @@ class AuthorController extends Controller
      */
     public function destroy(Author $author)
     {
+        $author->load('books');
+
+        $author->books()->delete();
         $author->delete();
 
         Mail::to(config('app.app_admin_email'))->send(new AuthorDeleted($author));
