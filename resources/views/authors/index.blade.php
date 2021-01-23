@@ -9,7 +9,7 @@
     <hr>
     @forelse($authors as $author)
         <div>
-            <h4>{{ $author->name }}</h4>
+            <h4><a href="{{ route('authors.show', $author->slug) }}">{{ $author->name }}</a></h4>
         </div>
     @empty
         <h4>Er zijn op dit moment geen auteurs!</h4>

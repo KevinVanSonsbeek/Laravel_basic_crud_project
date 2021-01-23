@@ -59,12 +59,14 @@ class AuthorController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Author $author
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function show($id)
+    public function show(Author $author)
     {
-        //
+        return view('authors.show', [
+            "author" => $author,
+        ]);
     }
 
     /**
